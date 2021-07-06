@@ -4,15 +4,15 @@ use clap::Clap;
 #[derive(Debug,  Clap)]
 pub struct SearchOp {
     #[clap(short, long, default_value = "15")]
-    num: u32,
+    pub num: u32,
     #[clap(short, long)]
-    all: bool,
+    pub all: bool,
     #[clap(short, long)]
-    pretty: bool,
+    pub pretty: bool,
     #[clap(short, long, default_value = "Vec::new()")]
-    topics: Vec<String>,
+    pub topics: Vec<String>,
     #[clap(short, long, default_value = "Vec::new()")]
-    records: Vec<String>,
+    pub records: Vec<String>,
     #[clap(subcommand)]
-    target: Option<super::Target>
+    pub target: Option<super::Target>
 }

@@ -12,13 +12,25 @@ pub struct LinkOp {
     #[clap(long, short)]
     pub topic: Vec<String>,
 }
-#[derive(Deserialize, Serialize, Debug, Clap)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Link {
     pub name: String,
     pub created_at: DateTime<Local>
 }
+impl Default for Link {
+    fn default() -> Self {
+        Self {
+            name: String::new(),
+            created_at: Local::now(),
+        }
+    }
+}
 
 impl Model for Link {
+    type Op = LinkOp;
 
 }
 
+impl super::ModelOp for LinkOp {
+
+}

@@ -9,7 +9,7 @@ pub struct ListOp {
     #[clap(short, long)]
     pretty: bool,
     #[clap(subcommand)]
-    target: Option<super::Target>,
+    pub target: Option<super::Target>,
     #[clap(short, long, default_value = "Vec::new()")]
     topics: Vec<String>,
     #[clap(short, long, default_value = "Vec::new()")]

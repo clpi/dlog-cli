@@ -1,7 +1,8 @@
 use clap::Clap;
+use crate::models::ModelOp;
 
-#[derive(Debug,  Clap)]
+#[derive(Debug, Clap)]
 pub struct SetOp {
     #[clap(subcommand)]
-    target: Option<super::Target>
+    pub target: Option<super::Target>
 }

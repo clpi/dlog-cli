@@ -11,12 +11,21 @@ pub struct FieldOp {
     pub kind: Option<String>,
     pub item: Option<String>,
 }
-#[derive(Deserialize, Serialize, Debug, Clap)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Field {
     pub name: String,
     pub created_at: DateTime<Local>
 }
+impl Default for Field {
+    fn default() -> Self {
+        Self {
+            name: String::new(),
+            created_at: Local::now(),
+        }
+    }
+}
 impl Model for Field {
+    type Op = FieldOp;
 
 }
 pub struct FieldType {
@@ -54,3 +63,6 @@ pub enum FieldValue {
     // DateRange(Date<Local>, Date<Local>),
     DateTimeRange(DateTime<Local>, DateTime<Local>)
 } */
+impl super::ModelOp for FieldOp {
+
+}

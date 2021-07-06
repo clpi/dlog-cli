@@ -1,5 +1,7 @@
 pub mod new;
 pub mod search;
+pub mod start;
+pub mod stop;
 pub mod config;
 pub mod delete;
 pub mod get;
@@ -7,20 +9,26 @@ pub mod set;
 pub mod list;
 
 pub use self::{
-    new::NewCmd,
+    new::NewOp,
     delete::DeleteOp,
     set::SetOp,
     get::GetOp,
     list::ListOp,
     search::SearchOp,
     config::ConfigCmd,
+    start::StartCmd,
+    stop::StopCmd,
 };
 
 use clap::{Clap, AppSettings};
-use crate::models::{TopicOp, BookOp, UserOp, ChannelOp, LinkOp, ItemOp, FieldOp, AgentOp, EntryOp};
+use crate::models::{
+    ModelOp,
+    TopicOp,
+    BookOp, UserOp, ChannelOp, LinkOp, ItemOp, FieldOp, AgentOp, EntryOp
+};
 
 #[derive(Debug, Clap)]
-#[clap(author, about, version, setting = AppSettings::InferSubcommands)]
+#[clap(author, about, version)]
 pub struct Dlog {
     value: Option<String>,
     #[clap(short, long)]
@@ -49,61 +57,58 @@ pub struct Dlog {
 
 #[derive(Debug, Clap)]
 pub enum Cmd {
-    #[clap(name = "new", aliases = &["init", "ini", "i"])]
-    New(NewCmd),
-    #[clap(name = "get")]
-    Get(GetOp),
-    #[clap(name = "list", aliases = &["get-all", "ls"])]
-    List(ListOp),
-    #[clap(name = "delete", aliases = &["remove", "rm", "r"])]
-    Delete(DeleteOp),
-    #[clap(name = "update")]
-    Update(SetOp),
-    #[clap(name = "search", alias = "find")]
+    #[clap(name = "start", aliases = &["run", "r", "execute", "exec"])]
+    Start(StartCmd),
+    #[clap(name = "stop", aliases = &["end", "term", "terminate"])]
+    Stop(StopCmd),
+    #[clap(flatten)]
+    Op(Op),
+    #[clap(name = "search", aliases = &["find", "s", "f"])]
     Search(SearchOp),
-    #[clap(name = "config")]
+    #[clap(name = "config", aliases = &["conf", "c"])]
     Config(ConfigCmd),
     #[clap(flatten)]
-    Target(Op),
-}
-
-#[derive(Debug,  Clap)]
-pub enum Op {
-    #[clap(name = "new", aliases = &["init", "ini", "i"])]
-    New,
-    #[clap(name = "get")]
-    Get,
-    #[clap(name = "list", aliases = &["get-all", "ls"])]
-    List,
-    #[clap(name = "delete", aliases = &["remove", "rm", "r"])]
-    Delete,
-    #[clap(name = "update")]
-    Update,
+    Target(Target),
 }
 #[derive(Debug, Clap)]
 pub enum Target {
-    #[clap(name = "book")]
+    #[clap(name = "book", aliases = &["record", "rec"])]
     Book(BookOp),
-    #[clap(name = "link")]
+    #[clap(name = "link", alias = "li")]
     Link(LinkOp),
-    #[clap(name = "channel")]
+    #[clap(name = "channel", alias = "chan")]
     Channel(ChannelOp),
     #[clap(name = "item")]
     Item(ItemOp),
     #[clap(name = "field")]
     Field(FieldOp),
-    #[clap(name = "entry")]
+    #[clap(name = "entry", aliases = &["post", "value", "en"])]
     Entry(EntryOp),
-    #[clap(name = "agent")]
+    #[clap(name = "agent", alias = "bot")]
     Agent(AgentOp),
-    #[clap(name = "user")]
+    #[clap(name = "user", alias = "u")]
     User(UserOp),
-    #[clap(name = "topic")]
+    #[clap(name = "topic", aliases = &["t", "top"])]
     TopicOp(TopicOp),
 }
+#[derive(Debug,  Clap)]
+pub enum Op {
+    #[clap(name = "new", aliases = &["init", "create", "add", "ini", "i"])]
+    New(NewOp),
+    #[clap(name = "get", alias = "g")]
+    Get(GetOp),
+    #[clap(name = "list", aliases = &["get-all", "ls", "l"])]
+    List(ListOp),
+    #[clap(name = "delete", aliases = &["d", "del", "remove", "rm"])]
+    Delete(DeleteOp),
+    #[clap(name = "set", aliases = &["u", "set", "update", "edit", "e"])]
+    Set(SetOp),
+}
+
 impl Dlog {
     pub fn get() -> Self {
         let cmd = Self::parse();
+        let parsed = dlog_parse::parse::DlBaseParser::parse_input();
         cmd
     }
 }

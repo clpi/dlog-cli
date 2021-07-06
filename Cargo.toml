@@ -21,3 +21,4 @@ clap = { version = "3.0.0-beta.2", features = ["wrap_help"] }
 chrono = { version = "0.4.19", features = ["serde"] }
 serde = { version = "1.0.126", features = ["derive"] }
 derive_more = "0.99.14"
+termcolor = "1.1.2"

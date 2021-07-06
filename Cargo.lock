@@ -227,6 +227,7 @@ dependencies = [
  "derive_more",
  "dlog-parse",
  "serde",
+ "termcolor",
 ]
 
 [[package]]

@@ -20,8 +20,26 @@ pub use self::{
     topic::{TopicOp, Topic}
 };
 
-pub trait Model {}
+pub trait Model: Default {
+    type Op: ModelOp;
 
-pub trait ModelIn: clap::Clap {
+    fn new(model: Self::Op) -> Self {
+        Self::default()
+    }
+    fn get(model: Self::Op) -> Self {
+        Self::default()
+    }
+    fn set(model: Self::Op) -> Self {
+        Self::default()
+    }
+    fn delete(model: Self::Op) -> Self {
+        Self::default()
+    }
+    fn list(model: Self::Op) -> Self {
+        Self::default()
+    }
+}
+
+pub trait ModelOp: clap::Clap {
 
 }

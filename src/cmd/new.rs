@@ -1,7 +1,9 @@
 use clap::Clap;
 
+use crate::models::ModelOp;
+
 #[derive(Debug, Clap)]
-pub struct NewCmd {
+pub struct NewOp {
     #[clap(subcommand)]
-    target: Option<super::Target>
+    pub target: Option<super::Target>
 }

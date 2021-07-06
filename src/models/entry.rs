@@ -14,9 +14,22 @@ pub struct EntryOp {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Entry {
+    pub name: Option<String>,
     pub created_at: DateTime<Local>
+}
+impl Default for Entry {
+    fn default() -> Self {
+        Self {
+            name: None,
+            created_at: Local::now(),
+        }
+    }
 }
 
 impl Model for Entry {
+    type Op = EntryOp;
+
+}
+impl super::ModelOp for EntryOp {
 
 }

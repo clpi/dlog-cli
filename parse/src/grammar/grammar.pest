@@ -1,0 +1,17 @@
+WHITESPACE = _{ " " | NEWLINE | "\t" }
+
+alpha = { 'a'..'z' | 'A'..'Z' }
+
+digit = { '0'..'9' }
+
+ident = { (alpha | digit)+ }
+
+paren = ${ "(" ~ paren_inner ~ ")" }
+
+paren_inner = @{ ident* }
+
+op = @{ and_op | or_op }
+
+and_op = @{ ";" | "and" }
+
+or_op = @{ "," | "or" }

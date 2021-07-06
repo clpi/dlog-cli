@@ -11,13 +11,24 @@ pub struct ChannelOp {
     #[clap(long, short)]
     pub topic: Vec<String>,
 }
-#[derive(Deserialize, Serialize, Debug, Clap)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Channel {
     pub name: String,
     pub created_at: DateTime<Local>
 }
-
-impl Model for Channel {
-
+impl Default for Channel {
+    fn default() -> Self {
+        Self {
+            name: String::new(),
+            created_at: Local::now(),
+        }
+    }
 }
 
+impl Model for Channel {
+    type Op = ChannelOp;
+
+}
+impl super::ModelOp for ChannelOp {
+
+}
