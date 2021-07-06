@@ -1,0 +1,23 @@
+[package]
+name = "dvc"
+version = "0.1.0"
+edition = "2018"
+default-run = "dlog"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "dlog"
+path = "src/bin/dlog.rs"
+
+[lib]
+name = "dlog"
+path = "src/lib.rs"
+
+[dependencies]
+dlog-parse = { path = "./parse/" }
+actix = "0.12.0"
+clap = { version = "3.0.0-beta.2", features = ["wrap_help"] }
+chrono = { version = "0.4.19", features = ["serde"] }
+serde = { version = "1.0.126", features = ["derive"] }
+derive_more = "0.99.14"
